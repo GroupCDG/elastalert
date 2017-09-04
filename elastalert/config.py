@@ -125,10 +125,11 @@ def load_configuration(filename, conf, args=None, s3=False):
     load_modules(rule, args)
     return rule
 
+
 def load_s3_rule_yaml(filename, conf):
     logging.debug("Load rule from s3" + filename)
     s3client = boto3.client("s3")
-    s3_object = s3client.get_object( 
+    s3_object = s3client.get_object_v2(
                 Bucket=conf["s3_bucket"],
                 Key=filename
                 )
@@ -138,6 +139,7 @@ def load_s3_rule_yaml(filename, conf):
         'storage_type': 's3'
     })
     return rule
+
 
 def load_rule_yaml(filename):
     rule = {
@@ -518,8 +520,6 @@ def load_rules(args):
             raise EAException('Error loading file %s: %s' % (rule_file, e))
         rules.append(rule)
         names.append(rule['name'])
-
-
     conf['rules'] = rules
     return conf
 
@@ -564,20 +564,17 @@ def adjust_deprecated_values(rule):
         logging.warning('"simple" alerter has been renamed "post" and comptability may be removed in a future release.')
 
 
-
 def list_s3_objects(conf):
     objects = []
     if conf.get("s3_bucket", False):
-        s3 = boto3.resource('s3')
         s3client = boto3.client('s3')
         try:
             all_objects = s3client.list_objects_v2(
                     Bucket=conf["s3_bucket"],
                     Prefix=conf["s3_prefix"])
             for obj in all_objects["Contents"]:
-                if obj["Key"].endswith(".yaml"): objects.append(obj)
+                if obj["Key"].endswith(".yaml"):
+                    objects.append(obj)
         except Exception as e:
-            logging.exception("failed to access S3")
+            logging.exception("failed to access S3", e)
     return objects
-
-
