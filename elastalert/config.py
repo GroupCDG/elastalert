@@ -615,7 +615,7 @@ def list_s3_objects(conf):
                     objects.append(obj)
 >>>>>>> Fixed code style
         except Exception as e:
-            logging.exception("failed to access S3", e)
+            logging.exception("failed to access S3")
     return objects
 <<<<<<< HEAD
 
