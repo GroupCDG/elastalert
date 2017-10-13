@@ -551,5 +551,5 @@ def list_s3_objects(conf):
                 if obj["Key"].endswith(".yaml"):
                     objects.append(obj)
         except Exception as e:
-            logging.exception("failed to access S3")
+            logging.warning("failed to access S3")
     return objects
