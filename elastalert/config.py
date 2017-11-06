@@ -129,7 +129,7 @@ def load_configuration(filename, conf, args=None, s3=False):
 def load_s3_rule_yaml(filename, conf):
     logging.debug("Load rule from s3" + filename)
     s3client = boto3.client("s3")
-    s3_object = s3client.get_object_v2(
+    s3_object = s3client.get_object(
                 Bucket=conf["s3_bucket"],
                 Key=filename
                 )
