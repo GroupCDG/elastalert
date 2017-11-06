@@ -126,7 +126,7 @@ def load_configuration(filename, conf, args=None, s3=False):
 def load_s3_rule_yaml(filename, conf):
     logging.debug("Load rule from s3" + filename)
     s3client = boto3.client("s3")
-    s3_object = s3client.get_object_v2(
+    s3_object = s3client.get_object(
                 Bucket=conf["s3_bucket"],
                 Key=filename
                 )
@@ -500,9 +500,9 @@ def load_rules(args):
         try:
             rule = load_configuration(s3_object["Key"], conf, args, s3=True)
             if rule['name'] in names:
-                raise EAException('Duplicate rule named %s' % (rule['name']))
+                logging.warning('Duplicate rule named %s', rule['name'])
         except EAException as e:
-            raise EAException('Error loading file %s: %s' % (rule_file, e))
+            raise EAException('Error loading file: %s' % (e))
         rules.append(rule)
         names.append(rule['name'])
     conf['rules'] = rules
