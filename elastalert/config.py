@@ -577,61 +577,18 @@ def adjust_deprecated_values(rule):
             rule['http_post_url'] = rule['simple_webhook_url']
         logging.warning('"simple" alerter has been renamed "post" and comptability may be removed in a future release.')
 
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 def list_s3_objects(conf):
     objects = []
     if conf.get("s3_bucket", False):
-=======
-
-def list_s3_objects(conf):
-    objects = []
-    if conf.get("s3_bucket", False):
-        s3 = boto3.resource('s3')
->>>>>>> Implement pulling rules from s3
-=======
-def list_s3_objects(conf):
-    objects = []
-    if conf.get("s3_bucket", False):
->>>>>>> Fixed code style
-=======
-def list_s3_objects(conf):
-    objects = []
-    if conf.get("s3_bucket", False):
->>>>>>> 33b0333af6b7a65ee48a4bb16268f95617846d61
         s3client = boto3.client('s3')
         try:
             all_objects = s3client.list_objects_v2(
                     Bucket=conf["s3_bucket"],
                     Prefix=conf["s3_prefix"])
             for obj in all_objects["Contents"]:
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 33b0333af6b7a65ee48a4bb16268f95617846d61
                 if obj["Key"].endswith(".yaml"):
                     objects.append(obj)
         except Exception as e:
             logging.warning("failed to access S3")
     return objects
-<<<<<<< HEAD
-=======
-                if obj["Key"].endswith(".yaml"): objects.append(obj)
-=======
-                if obj["Key"].endswith(".yaml"):
-                    objects.append(obj)
->>>>>>> Fixed code style
-        except Exception as e:
-            logging.warning("failed to access S3")
-    return objects
-<<<<<<< HEAD
 
-
->>>>>>> Implement pulling rules from s3
-=======
->>>>>>> Fixed code style
-=======
->>>>>>> 33b0333af6b7a65ee48a4bb16268f95617846d61
