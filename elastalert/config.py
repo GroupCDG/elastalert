@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# Licensed under the Apache License, Version 2.0 (the "License");
+# Please note: This is not the original version of file. This has been modified by CDG.
+
 import copy
 import datetime
 import time
